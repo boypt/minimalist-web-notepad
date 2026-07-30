@@ -31,8 +31,9 @@ curl http://mininopad.url/dmesg/html
 Installation
 ------------
 
-At the top of `index.php` file, change `$base_url` variable to point to your
-site.
+This app assumes it is served at the site root (redirects and the favicon
+use absolute paths like `/<id>` and `/favicon.ico`). For subpath deployments,
+front it with a reverse proxy that rewrites the path or add a `<base href>` shim.
 
 Make sure the web server is allowed to write to the `_tmp` directory.
 
