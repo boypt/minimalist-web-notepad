@@ -1,0 +1,17 @@
+{
+  "name": "minimalist-web-notepad-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create minimalist-web-notepad",
+    "db:migrate": "wrangler d1 migrations apply minimalist-web-notepad --remote",
+    "db:migrate:local": "wrangler d1 migrations apply minimalist-web-notepad --local",
+    "db:gc": "wrangler d1 execute minimalist-web-notepad --remote --command \"DELETE FROM notes WHERE expires_at IS NOT NULL AND expires_at < (unixepoch() * 1000)\""
+  },
+  "devDependencies": {
+    "wrangler": "^4.130.0"
+  }
+}

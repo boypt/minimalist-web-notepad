@@ -1,0 +1,27 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "minimalist-web-notepad"
+main = "src/index.js"
+compatibility_date = "2026-06-12"
+# zstd compression is provided by node:zlib, which needs the compat flag.
+compatibility_flags = ["nodejs_compat"]
+
+# Static files (favicon.ico). Requests that do not match a file on disk
+# fall through to the Worker, which owns all note routes.
+[assets]
+directory = "./public"
+
+# D1 binding. Create the database first, then paste its id here:
+#   npx wrangler d1 create minimalist-web-notepad
+[[d1_databases]]
+binding = "DB"
+database_name = "minimalist-web-notepad"
+database_id = "REPLACE_WITH_YOUR_DATABASE_ID"
+migrations_dir = "migrations"
+
+# Daily garbage collection of expired notes (03:00 UTC).
+[triggers]
+crons = ["0 3 * * *"]
+
+[vars]
+# Days before an untouched note expires; "0" disables expiry entirely.
+NOTE_TTL_DAYS = "30"
